@@ -44,6 +44,71 @@ router.post("/", (req, res) => {
             ...body
         }
     });
+});
+
+router.delete("/:id", (req, res) => {
+    const idToDelete = parseInt(req.params.id);
+
+    if(Number.isInteger(idToDelete) && !Number.isNaN(idToDelete)) {
+
+        const productDeleted = products.filter(({id}) => id == idToDelete)
+        console.log(productDeleted[0]);
+
+        if(productDeleted[0]) {
+            res.json({
+                "message": "Deleted",
+                "data": productDeleted[0]
+            })
+        } else {
+            res.json({
+                "message": "Id not exists"
+            })
+        }
+
+    } else {
+        res.json({
+            "message": "The id is not valid"
+        })
+    }
+
+})
+
+router.put("/:id", (req, res) => {
+    const idToChange = parseInt(req.params.id);
+    const body = req.body;
+
+    if(Number.isInteger(idToChange) && !Number.isNaN(idToChange)) {
+
+        res.json({
+            "message": "Changed",
+            "data": {"id": idToChange, ...body}
+        })
+
+
+    } else {
+        res.json({
+            "message": "The id is not valid"
+        })
+    }
+})
+
+router.patch("/:id", (req, res) => {
+    const idToChange = parseInt(req.params.id);
+    const body = req.body;
+
+    if(Number.isInteger(idToChange) && !Number.isNaN(idToChange)) {
+
+        res.json({
+            "message": "Changed",
+            "data": {"id": idToChange, ...body}
+        })
+
+
+    } else {
+        res.json({
+            "message": "The id is not valid"
+        })
+    }
 })
 
 module.exports = router;
