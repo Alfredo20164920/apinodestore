@@ -24,11 +24,12 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
 	const idProduct = req.params.id;
     const product = products.filter(({id}) => id == idProduct);
+    const isExist = products.some(({id}) => id == idProduct);
 
-    if(product.length > 0) {
+    if(isExist) {
         res.json(product);
     } else {
-        res.json({
+        res.status(404).json({
             message: `The ${idProduct} id product is not in the list`
         })
     }
@@ -37,7 +38,7 @@ router.get('/:id', (req, res) => {
 router.post("/", (req, res) => {
     const body = req.body;
 
-    res.json({
+    res.status(201).json({
         message: "Created",
         data: {
             id: 5000,
