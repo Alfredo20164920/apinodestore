@@ -15,16 +15,16 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
     try {
         const idProduct = req.params.id;
         const data = await service.getById(idProduct);
         res.json(data)
     } catch (error) {
-        
-        res.status(404).json({
-            message: error.message
-        })
+        next(error);
+            // res.status(404).json({
+            //     message: error.message
+            // })
     }
 
     
